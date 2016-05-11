@@ -1,0 +1,9 @@
+
+high:
+ * readme file
+ * command line argument parser: see pre defined variables for possible arguments
+ * support user defined keywords replacement table
+ * output uniq and duplicated entries into different file
+
+low:
+ * add simple gui support to call the command line

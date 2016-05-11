@@ -1,0 +1,48 @@
+Description
+===========
+This utility can generate ecc-enabled flash block.
+It's very similar in result to download a partition into raw flash thru multiburn, with a ecc-enabled flash controller.
+The genreated block is burnt into raw flash chip with a flash burner, so that an ecc-enabled flash controller can boot and run firmware directly from this flash chip.
+
+
+Step to generate ecc-enabled block for sxp12g
+=============================================
+1. for each image file, run pmc-img-gen.sh to generate raw partition file with "of_bonus=" option, for example:
+  pmc-img-gen.sh if_type=csv if=istr_flash.csv of=istr_flash.bin \
+	fw_rev=0x0403000b part=0x02 prod_id=0x1 hw_rev=0xa vendor=PMC_ISTR \
+	of_bonus=istr_flash.part
+
+2. run pmc-ecc-flash-block-gen.sh to generate the final ecc block from raw partition files:
+  pmc-ecc-flash-block-gen.sh of=ecc_flash_block.dat \
+        part255=boot_mips.part part1=istr_flash.part part5=sxp_evbd_rom.part \
+        part3=boot_cfg.part part2=istr_flash.part part6=sxp_evbd_rom.part
+
+3. alternatively, user need not to provide all partitions. following is a minimum block requirement:
+  pmc-ecc-flash-block-gen.sh of=ecc_flash_block.dat \
+        part255=boot_mips.part part1=istr_flash.part part5=sxp_evbd_rom.part \
+        part3=boot_cfg.part
+
+
+Advance usage example for customized partition
+==============================================
+1. user create it's own raw partition image, say my_own.part.
+
+2. my_own.part was used to write to non-ecc flash: begin_offset=0x00080000, end_offset=0x0008ffff
+
+3. user then create a ecc-flash image with 8mb size (0x00800000)
+  pmc-ecc create ecc-block.dat 0x00800000
+
+This image is all 0xff data filled with valid ecc
+
+4. user now fill the my_own.part into the ecc-block.data
+  pmc-ecc fill ecc-block.dat my_own.part 0x00080000 0x0008ffff
+
+5. burn the ecc-block.data to a flash chip with flash burner
+
+6. plug back the flash chip into ecc-enabled sxp12g board
+
+7. power up the sxp12g board and use debugger to access 0x00004000
+
+8. user will get the content of my_own.part
+
+

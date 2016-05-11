@@ -1,0 +1,43 @@
+Quick Start
+===========
+make && make install
+
+pmc-img-gen.sh if_type=csv \
+  if=/path/to/pm73206_04/fwcs/sxp12g/src/istr/istr_flash.csv \
+  of=/path/to/pm73206_04/fwcs/sxp12g/build/bin/istr_flash.bin \
+  fw_rev=0x0403000b part=0x2 vendor=PMC_ISTR prod_id=0x1 hw_rev=0xa
+
+# compile the sxp project before following command been executed
+
+pmc-img-gen.sh if_type=raw \
+  if=/path/to/pm73206_04/fwcs/sxp12g/build/sxp_evbd_rom.mem \
+  of=/path/to/pm73206_04/fwcs/sxp12g/build/bin/sxp_evbd_rom.bin \
+  fw_rev=0x0403000b part=0x5 vendor=PMC prod_id=0x1 hw_rev=0xa
+
+
+Utilities
+=========
+pmc-img-gen.sh
+pmc-csv2mem.sh
+pmc-img-mod.sh
+pmc-crc32
+
+
+Example for selecting utility
+=============================
+source file             destination file        utility to use
+--------------------------------------------------------------
+boot_mips_sxp.mem       boot_mips.bin           pmc-img-gen.sh
+sxp_evbd_rom.mem        sxp_evbd_rom.bin        pmc-img-gen.sh
+istr_flash.csv          istr_flash.bin          pmc-img-gen.sh
+istr_flash.csv          istr_flash.mem(no hdr)  pmc-csv2mem.sh
+istr_flash.mem(no_hdr)  istr_flash.bin          pmc-img-gen.sh
+boot_cfg.csv		boot_cfg.bin		pmc-img-gen.sh
+
+
+Additional usage case
+=====================
+You can modify istr_flash.bin directly without regenerating from istr_flash.csv.
+For example, you want to change the offset 0x41 with data 0xaa to data 0xbb, just run:
+  pmc-img-mod.sh set istr_flash.bin 0x41 0xbb
+

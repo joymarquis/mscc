@@ -1,0 +1,8 @@
+Calculate PMC crc32 from giving binary file
+
+pmc-crc32.sh:
+ * standalone bash version, low performance
+
+pmc-crc32.c:
+ * standalone c version
+
