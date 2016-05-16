@@ -1,0 +1,79 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundcolor #fefefe
+skinparam defaultfontname tahoma
+scale 1
+
+participant "Host OS" as h
+participant "Switchtec" as s
+
+title Hot remove with power_controller_present=true
+autonumber
+
+== user press attention_button ==
+hnote over s
+	(FW ignore HW press event)
+end hnote
+== user release attention_button ==
+hnote over s
+	ST:attention_button_pressed=true
+end hnote
+h<-s: issue interrupt to host
+
+hnote over h
+	CTRL:power_indicator=blink
+end hnote
+hnote over s
+	set power_indicator to blink
+end hnote
+== user check power indicator is blink ==
+... after 5 seconds (host interval to allow for attention_button canceling) ...
+
+hnote over h
+	CTRL:power_controller_control=off
+end hnote
+
+hnote over s
+	turn off slot power
+end hnote
+hnote over s
+	ST:data_link_layer_state_changed=true
+	ST:data_link_layer_link_active=false
+end hnote
+h<-s: issue interrupt to host
+
+group if CAP:eml_present=true
+hnote over h
+	CTRL:eml_control=off
+end hnote
+hnote over s
+	(customer specific action)
+end hnote
+end
+
+hnote over h
+	CTRL:power_indicator=off
+end hnote
+hnote over s
+	set power_indicator to off
+end hnote
+
+group if CAP:mrl_sensor_present=true
+== user open MRL ==
+hnote over s
+	ST:mrl_sensor_changed=true
+	ST:mrl_sensor_state=open
+end hnote
+h<-s: issue interrupt to host
+end
+
+== user remove drives ==
+hnote over s
+	ST:presense_detect_changed=true
+	ST:presense_detected_state=false
+end hnote
+h<-s: issue interrupt to host
+
+== user check power indicator is off and link state is as expected ==
+
+@enduml

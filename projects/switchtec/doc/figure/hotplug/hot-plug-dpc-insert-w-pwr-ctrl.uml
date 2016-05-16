@@ -1,0 +1,16 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundcolor #fefefe
+skinparam defaultfontname tahoma
+scale 1
+
+participant "Host OS" as h
+participant "Switchtec" as s
+
+title Hot insert with dpc=enabled power_controller_present=true
+
+note over h,s
+	(Same as dpc=disabled)
+end note
+
+@enduml

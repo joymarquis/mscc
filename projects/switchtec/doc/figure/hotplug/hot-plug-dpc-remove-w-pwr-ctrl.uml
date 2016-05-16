@@ -1,0 +1,57 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundcolor #fefefe
+skinparam defaultfontname tahoma
+scale 1
+
+participant "Host OS" as h
+participant "Switchtec" as s
+
+title Hot remove with dpc=enabled power_controller_present=true
+autonumber
+
+group if CAP:mrl_sensor_present=true
+== user open MRL ==
+hnote over s
+	ST:mrl_sensor_changed=true
+	ST:mrl_sensor_state=open
+end hnote
+h<-s: issue interrupt to host
+end
+
+== user remove drives ==
+hnote over s
+	(delay a short time before setting presense state)
+	(link down been detected by fw)
+end hnote
+hnote over s
+	ST:presense_detect_changed=true
+	ST:presense_detected_state=false
+end hnote
+h<-s: issue interrupt to host
+
+hnote over s
+	ST:aer:uncorrectable_error:surprise_down=true
+end hnote
+
+hnote over h
+	(detected presense change and unload driver)
+	CTRL:power_ctrl=off
+	CTRL:power_indicator=off
+end hnote
+hnote over s
+	(power down the port)
+	(set power indicator to off)
+end hnote
+
+hnote over s
+	ST:data_link_layer_state_changed=true
+	ST:data_link_layer_link_active=false
+end hnote
+h<-s: issue interrupt to host
+
+hnote over h
+	(detected link down event and ignore)
+end hnote
+
+@enduml
