@@ -120,6 +120,11 @@ Func do_msg_err_exit($_title, $_info, $_timeout_s = 0)
 	  Exit 1
 EndFunc
 
+
+Func do_win_resize($_cl_win, $_w, $_h)
+	WinMove($_cl_win, "", Default, Default, $_w, $_h)
+EndFunc
+
 Func do_win_wait_exist($_cl_win)
 	While True
 		If WinExists($_cl_win) Then

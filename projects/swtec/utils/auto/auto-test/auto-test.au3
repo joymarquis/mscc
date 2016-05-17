@@ -7,7 +7,6 @@ Local $mail_body[1] = [ "[" & _Now() & "]" ]
 
 
 $cl_win = "[CLASS:SunAwtFrame; REGEXPTITLE:Executor]"
-;$cl_win = "[CLASS:Vim; REGEXPTITLE:GVIM]"
 
 
 ; test init
