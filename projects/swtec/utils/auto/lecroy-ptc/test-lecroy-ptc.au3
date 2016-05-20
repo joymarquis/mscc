@@ -31,10 +31,11 @@ EndIf
 
 
 ; define
+$str_regex_58_10_ignore = "AdjustingPresets 1[2-6]"
+$str_regex_66_10_skip = "ASPML1-03-2_5"
 $str_keyword_d3 = "D3State"
 $str_keyword_aspm = "ASPM"
 $str_keyword_trans_1_1 = "Trans 1-1 TXN_"
-
 
 Local $arr_case_all[0]
 Local $arr_case_picked[0]
@@ -88,7 +89,9 @@ ElseIf $case_id = "part" Then
 	For $_i = 0 To ($cnt_case_all - 1)
 		do_win_active($cl_win)
 		$_str_item = _GUICtrlListView_GetItemText($h_lview, $_i)
-		If StringInStr($_str_item, $str_keyword_d3) Then
+		If StringRegExp($_str_item, $str_regex_58_10_ignore) Then
+			_GUICtrlListView_SetItemSelected($h_lview, $_i, False)
+		ElseIf StringInStr($_str_item, $str_keyword_d3) Then
 			_GUICtrlListView_SetItemSelected($h_lview, $_i, False)
 		ElseIf StringInStr($_str_item, $str_keyword_aspm) Then
 			_GUICtrlListView_SetItemSelected($h_lview, $_i, False)
@@ -116,7 +119,9 @@ ElseIf $case_id = "aspm" Then
 	For $_i = 0 To ($cnt_case_all - 1)
 		do_win_active($cl_win)
 		$_str_item = _GUICtrlListView_GetItemText($h_lview, $_i)
-		If StringInStr($_str_item, $str_keyword_aspm) Then
+		If StringRegExp($_str_item, $str_regex_66_10_skip) Then
+			ContinueLoop
+		ElseIf StringInStr($_str_item, $str_keyword_aspm) Then
 			_GUICtrlListView_SetItemSelected($h_lview, $_i, True)
 			_ArrayAdd($arr_case_picked, $_str_item)
 			$cnt_case_picked += 1
