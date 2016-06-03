@@ -142,29 +142,29 @@ do_progress_set(80, "cleaning up")
 
 ; result
 Func do_list_get_result($_cl_win, $_cl_list, $_info)
-   $_h_list = ControlGetHandle($_cl_win, "", $_cl_list)
-   do_win_active($_cl_win)
-   $cnt_case_all_ = _GUICtrlListBox_GetCount($_h_list)
+	$_h_list = ControlGetHandle($_cl_win, "", $_cl_list)
+	do_win_active($_cl_win)
+	$cnt_case_all_ = _GUICtrlListBox_GetCount($_h_list)
 
-   For $_i = 0 To ($cnt_case_all_ - 1)
-   do_win_active($_cl_win)
-	  $_str_item = _GUICtrlListBox_GetText($_h_list, $_i)
-	  If StringInStr($_str_item, $str_pass) Then
-		 _ArrayAdd($arr_case_pass, $_str_item)
-		 $cnt_case_pass += 1
-	  ElseIf StringInStr($_str_item, $str_fail) Then
-		 _ArrayAdd($arr_case_fail, $_str_item)
-		 $cnt_case_fail += 1
-	  ElseIf StringInStr($_str_item, $str_nrun) Then
-		 _ArrayAdd($arr_case_nrun, $_str_item)
-		 $cnt_case_nrun += 1
-	  Else
-		 MsgBox($MB_SYSTEMMODAL, "test", $_info & ": invalid item: " & $_str_item)
-	  EndIf
-	  _ArrayAdd($arr_case_all_, $_str_item)
-   Next
+	For $_i = 0 To ($cnt_case_all_ - 1)
+		do_win_active($_cl_win)
+		$_str_item = _GUICtrlListBox_GetText($_h_list, $_i)
+		If StringInStr($_str_item, $str_pass) Then
+			_ArrayAdd($arr_case_pass, $_str_item)
+			$cnt_case_pass += 1
+		ElseIf StringInStr($_str_item, $str_fail) Then
+			_ArrayAdd($arr_case_fail, $_str_item)
+			$cnt_case_fail += 1
+		ElseIf StringInStr($_str_item, $str_nrun) Then
+			_ArrayAdd($arr_case_nrun, $_str_item)
+			$cnt_case_nrun += 1
+		Else
+			MsgBox($MB_SYSTEMMODAL, "test", $_info & ": invalid item: " & $_str_item)
+		EndIf
+		_ArrayAdd($arr_case_all_, $_str_item)
+	Next
 
-   _ArraySort($arr_case_all_)
+	_ArraySort($arr_case_all_)
 ;   _ArrayDisplay($arr_case_all_, "num_fail=" & $cnt_case_fail & " num_all=" & $cnt_case_all_, Default, 16)
 EndFunc
 do_list_get_result($cl_win, $cl_list, "result")

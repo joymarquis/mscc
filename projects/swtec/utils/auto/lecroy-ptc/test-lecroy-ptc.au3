@@ -32,7 +32,7 @@ EndIf
 
 ; define
 $str_regex_58_10_ignore = "AdjustingPresets 1[2-6]"
-$str_regex_66_10_skip = "ASPML1-03-2_5"
+$str_regex_66_10_skip = "ASPML1-0[23]-2_5"
 $str_keyword_d3 = "D3State"
 $str_keyword_aspm = "ASPM"
 $str_keyword_trans_1_1 = "Trans 1-1 TXN_"

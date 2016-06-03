@@ -24,7 +24,7 @@ do_progress_set(20, "starting")
 $i = 0
 Local $log_a[1] = [ "log begin" ]
 While True
-;	do_win_active($cl_win)
+	do_win_active($cl_win)
 	ControlSend($cl_win, "", "", "^4^4")
 	ControlSend($cl_win, "", "", "^{END}")
 	ControlSend($cl_win, "", "", "+{UP}+{UP}+{UP}+{UP}")
@@ -55,7 +55,12 @@ While True
 	If Mod($i, 2) = 0 Then
 		do_progress_set(50, "inprogress ping: " & do_time_diff_sec_get())
 	Else
-		do_progress_set(60, "inprogress pong: " & do_time_diff_sec_get())
+		If WinExists($cl_win) Then
+			do_progress_set(60, "inprogress pong: " & do_time_diff_sec_get())
+		Else
+			do_progress_set(90, "executor dead")
+			do_msg_err_exit($case_name, "executor dead")
+		EndIf
 	EndIf
 	Sleep(2000)
 	$i += 1
