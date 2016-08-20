@@ -30,6 +30,11 @@ ElseIf $case_id = "usp" Then
 	$dev_width_str_selected = "x16"
 	$case_str_selected = $case_name & ": " & $case_id
 	$list_id_selected = 6
+ElseIf $case_id = "uspx8" Then
+	$dev_str_selected = "VID=11f8, DID=8546, Bus=0004, Dev=0000, Fnc=0000"
+	$dev_width_str_selected = "x16"
+	$case_str_selected = $case_name & ": " & $case_id
+	$list_id_selected = 6
 ElseIf $case_id = "dsp" Or $case_id = "dspdp" Or $case_id = "dspdb" Then
 	$dev_str_selected = "VID=11f8, DID=8546, Bus=0005, Dev=0001, Fnc=0000"
 	$dev_width_str_selected = "x8"
