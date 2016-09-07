@@ -10,38 +10,76 @@ Local $mail_body[1] = [ "[" & _Now() & "]" ]
 
 If $CmdLine[0] = 1 Then
 	$case_id = $CmdLine[1]
+	$b_id = "zzzz"
+	$d_id = "zzzz"
+	$f_id = "zzzz"
+Elseif $CmdLine[0] = 4 Then
+	$case_id = $CmdLine[1]
+	$b_id = $CmdLine[2]
+	$d_id = $CmdLine[3]
+	$f_id = $CmdLine[4]
 Else
 	do_msg_err_exit($case_name, "Usage: " & do_basename_get(@ScriptFullPath) & " <dsp|dspdb|dspdp|dspmf|epm1|epm2|epmgmt|usp>")
 EndIf
 
 ; conf
 If $case_id = "epm2" Or $case_id = "epmgmt" Then
-	$dev_str_selected = "VID=11f8, DID=8546, Bus=0004, Dev=0000, Fnc=0001"
+	If $b_id = "zzzz" Then
+		$b_id = "0002"
+		$d_id = "0000"
+		$f_id = "0001"
+	EndIf
+	$dev_str_selected = "VID=11f8, DID=8546, Bus=" & $b_id & ", Dev=" & $d_id & ", Fnc=" & $f_id
 	$dev_width_str_selected = "x16"
 	$case_str_selected = $case_name & ": " & $case_id
 	$list_id_selected = 0
 ElseIf $case_id = "epm1" Then
-	$dev_str_selected = "VID=11f8, DID=8546, Bus=0004, Dev=0000, Fnc=0000"
+	If $b_id = "zzzz" Then
+		$b_id = "0002"
+		$d_id = "0000"
+		$f_id = "0000"
+	EndIf
+	$dev_str_selected = "VID=11f8, DID=8546, Bus=" & $b_id & ", Dev=" & $d_id & ", Fnc=" & $f_id
 	$dev_width_str_selected = "x16"
 	$case_str_selected = $case_name & ": " & $case_id
 	$list_id_selected = 0
 ElseIf $case_id = "usp" Then
-	$dev_str_selected = "VID=11f8, DID=8546, Bus=0004, Dev=0000, Fnc=0000"
+	If $b_id = "zzzz" Then
+		$b_id = "0002"
+		$d_id = "0000"
+		$f_id = "0000"
+	EndIf
+	$dev_str_selected = "VID=11f8, DID=8546, Bus=" & $b_id & ", Dev=" & $d_id & ", Fnc=" & $f_id
 	$dev_width_str_selected = "x16"
 	$case_str_selected = $case_name & ": " & $case_id
 	$list_id_selected = 6
 ElseIf $case_id = "uspx8" Then
-	$dev_str_selected = "VID=11f8, DID=8546, Bus=0004, Dev=0000, Fnc=0000"
-	$dev_width_str_selected = "x16"
+	If $b_id = "zzzz" Then
+		$b_id = "0002"
+		$d_id = "0000"
+		$f_id = "0000"
+	EndIf
+	$dev_str_selected = "VID=11f8, DID=8546, Bus=" & $b_id & ", Dev=" & $d_id & ", Fnc=" & $f_id
+	$dev_width_str_selected = "x8"
 	$case_str_selected = $case_name & ": " & $case_id
 	$list_id_selected = 6
 ElseIf $case_id = "dsp" Or $case_id = "dspdp" Or $case_id = "dspdb" Then
-	$dev_str_selected = "VID=11f8, DID=8546, Bus=0005, Dev=0001, Fnc=0000"
+	If $b_id = "zzzz" Then
+		$b_id = "0003"
+		$d_id = "0001"
+		$f_id = "0000"
+	EndIf
+	$dev_str_selected = "VID=11f8, DID=8546, Bus=" & $b_id & ", Dev=" & $d_id & ", Fnc=" & $f_id
 	$dev_width_str_selected = "x8"
 	$case_str_selected = $case_name & ": " & $case_id
 	$list_id_selected = 7
 ElseIf $case_id = "dspmf" Then
-	$dev_str_selected = "VID=11f8, DID=8546, Bus=0005, Dev=0000, Fnc=0002"
+	If $b_id = "zzzz" Then
+		$b_id = "0003"
+		$d_id = "0000"
+		$f_id = "0002"
+	EndIf
+	$dev_str_selected = "VID=11f8, DID=8546, Bus=" & $b_id & ", Dev=" & $d_id & ", Fnc=" & $f_id
 	$dev_width_str_selected = "x8"
 	$case_str_selected = $case_name & ": " & $case_id
 	$list_id_selected = 7
