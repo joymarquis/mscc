@@ -111,13 +111,11 @@ try:
 	cmd_run(a, 'fw_part', wait_s=0.5)
 
 	x = xmodem.XMODEM(x_getc, x_putc, mode='xmodem1k')
-#	x = xmodem.XMODEM(x_getc, x_putc, mode='xmodem')
 	for fn in args.file:
 		f = file(fn, 'rb')
 		print("")
 		print(os.path.basename(fn))
-		cmd_run(a, 'fw_update', r_prompt_xmodem_s)
-		#cmd_run(a, 'fw_update -s', r_prompt_xmodem_s)
+		cmd_run(a, 'fl_update', r_prompt_xmodem_s)
 		ret = x.send(f, retry=32, quiet=False, timeout=300)
 		cmd_run(a, 'fw_part', wait_s=1)
 		f.close()
